@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>مدیریت اپلای</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    {{ bootstrap.load_css() }}
+</head>
+<body>
+    <div class="container">
+        <h1>مدیریت اپلای و ایمیل‌ها</h1>
+        
+        <h2>دانشگاه‌ها</h2>
+        <form method="POST">
+            <input type="text" name="university_name" placeholder="نام دانشگاه" required>
+            <input type="text" name="country" placeholder="کشور" required>
+            <button type="submit">اضافه کن</button>
+        </form>
+        <ul>
+            {% for uni in universities %}
+                <li>{{ uni.name }} - {{ uni.country }}</li>
+            {% endfor %}
+        </ul>
+
+        <h2>اساتید</h2>
+        <form method="POST">
+            <input type="text" name="professor_name" placeholder="نام استاد" required>
+            <input type="email" name="professor_email" placeholder="ایمیل" required>
+            <select name="university_id">
+                {% for uni in universities %}
+                    <option value="{{ uni.id }}">{{ uni.name }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">اضافه کن</button>
+        </form>
+        <ul>
+            {% for prof in professors %}
+                <li>{{ prof.name }} - {{ prof.email }}</li>
+            {% endfor %}
+        </ul>
+
+        <h2>ددلاین‌ها</h2>
+        <form method="POST">
+            <input type="date" name="deadline_date" required>
+            <input type="text" name="deadline_type" placeholder="نوع ددلاین" required>
+            <select name="university_id">
+                {% for uni in universities %}
+                    <option value="{{ uni.id }}">{{ uni.name }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">اضافه کن</button>
+        </form>
+        <ul>
+            {% for dl in deadlines %}
+                <li>{{ dl.type }} - {{ dl.date }}</li>
+            {% endfor %}
+        </ul>
+
+        <h2>مدارک</h2>
+        <form method="POST">
+            <input type="text" name="document_type" placeholder="نوع مدرک" required>
+            <select name="university_id">
+                {% for uni in universities %}
+                    <option value="{{ uni.id }}">{{ uni.name }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">اضافه کن</button>
+        </form>
+        <ul>
+            {% for doc in documents %}
+                <li>{{ doc.type }}</li>
+            {% endfor %}
+        </ul>
+
+        <a href="{{ url_for('email_templates') }}" class="btn btn-primary">مدیریت قالب‌های ایمیل</a>
+    </div>
+</body>
+</html>

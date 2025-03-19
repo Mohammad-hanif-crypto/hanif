@@ -1,0 +1,15 @@
+body {
+    font-family: Arial, sans-serif;
+}
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+form {
+    margin-bottom: 20px;
+}
+input, textarea, select {
+    margin: 5px;
+    padding: 5px;
+}

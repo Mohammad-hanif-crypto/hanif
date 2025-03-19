@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>قالب‌های ایمیل</title>
+    {{ bootstrap.load_css() }}
+</head>
+<body>
+    <div class="container">
+        <h1>مدیریت قالب‌های ایمیل</h1>
+        
+        <h2>اضافه کردن قالب جدید</h2>
+        <form method="POST">
+            <input type="text" name="template_name" placeholder="نام قالب" required>
+            <textarea name="template_content" placeholder="محتوای قالب (مثلاً: Dear {name}, I am applying to {university}...)" required></textarea>
+            <button type="submit">اضافه کن</button>
+        </form>
+
+        <h2>قالب‌های موجود</h2>
+        {% for template in templates %}
+            <div>
+                <p><strong>{{ template.name }}</strong>: {{ template.content }}</p>
+                <form method="POST">
+                    <input type="hidden" name="template_id" value="{{ template.id }}">
+                    <input type="email" name="to_email" placeholder="ایمیل گیرنده" required>
+                    <input type="datetime-local" name="send_time" required>
+                    <button type="submit" name="send_email">زمان‌بندی و ارسال</button>
+                </form>
+            </div>
+        {% endfor %}
+        
+        <a href="{{ url_for('index') }}" class="btn btn-primary">بازگشت</a>
+    </div>
+</body>
+</html>
