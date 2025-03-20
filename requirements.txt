@@ -2,3 +2,4 @@ flask
 gunicorn
 flask_Sqlalchemy
 flask_bootstrap
+celery
