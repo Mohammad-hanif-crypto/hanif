@@ -72,13 +72,24 @@ def index():
             db.session.add(professor)
             db.session.commit()
         elif 'deadline_date' in request.form:
-            deadline = Deadline(date=datetime.strptime(request.form['deadline_date'], '%Y-%m-%d'), type=request.form['deadline_type'], university_id=request.form['university_id'])
+            deadline_date = request.form.get('deadline_date')
+            deadline_type = request.form.get('deadline_type')
+            university_id = request.form.get('university_id')
+
+            if not university_id:
+                return "Error: University ID is required", 400  # پاسخ مناسب در صورت نبود university_id
+
+            deadline = Deadline(
+            date=datetime.strptime(deadline_date, '%Y-%m-%d'), 
+            type=deadline_type, 
+            university_id=university_id
+                                            )
             db.session.add(deadline)
             db.session.commit()
-        elif 'document_type' in request.form:
-            document = Document(type=request.form['document_type'], university_id=request.form['university_id'])
-            db.session.add(document)
-            db.session.commit()
+    elif 'document_type' in request.form:
+        document = Document(type=request.form['document_type'], university_id=request.form['university_id'])
+        db.session.add(document)
+        db.session.commit()
     universities = University.query.all()
     professors = Professor.query.all()
     deadlines = Deadline.query.all()
